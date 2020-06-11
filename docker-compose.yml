@@ -35,7 +35,8 @@ services:
       - ./app.py:/api/app.py
     environment:
       PORT: "80"
-      API_KEY: "cHrOAuxW.IsLjUiG0XCrImNE8NE9k1Ob7fwQfNNKZ"
+      DBAAS_MONGODB_DATABASE: "project-partner"
+      DBAAS_MONGODB_ENDPOINT: "mongodb://db-partner:27017/project-partner"
     #tty: true
     command: honcho start
 

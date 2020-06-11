@@ -55,7 +55,7 @@ class ValidPartner:
             self.errors.append({field: f'Min length {min_length}'})
 
     # document: 1432132123891/0001
-    def _document(self, field='document', length=14):
+    def _document(self, field='document', length=18):
         """ Validate data document
             - exist
             - Requered
@@ -96,7 +96,7 @@ class ValidPartner:
             self.errors.append({field: 'Not found'})
             return False
 
-        if not self.util._is_requered(field, self.data):
+        if not self.util._is_requered(self.data[field]):
             self.errors.append({field: 'Required field'})
             return False
 
@@ -114,6 +114,6 @@ class ValidPartner:
             self.errors.append({field: 'Not found'})
             return False
 
-        if not self.util._is_requered(field, self.data):
+        if not self.util._is_requered(self.data[field]):
             self.errors.append({field: 'Required field'})
             return False

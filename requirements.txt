@@ -4,3 +4,7 @@ flask-swagger==0.2.14
 flask-swagger-ui==3.20.9
 gunicorn==20.0.4
 honcho==1.0.1
+pycpfcnpj
+pymongo
+ujson
+geojson

@@ -1,24 +1,24 @@
 import geojson
+import ujson
 
 
 class Hydrator:
-    def __init__(self, data):
-        self.data = data
 
-    def enconde_partner(self):
+    def encode_partner(self, data):
         return {
-            "tradingName": self.data['tradingName'],
-            "ownerName":  self.data['ownerName'],
-            "document": self.data['document'],
-            "coverageArea": geojson.dump(self.data['coverageArea']),
-            "address": geojson.dump(self.data['address'])
+            "id": str(data['_id']),
+            "tradingName": data['tradingName'],
+            "ownerName":  data['ownerName'],
+            "document": data['document'],
+            "coverageArea": data['coverageArea'],
+            "address": data['address']
         }
 
-    def decode_partner(self):
+    def decode_partner(self, data):
         return {
-            "tradingName": self.data['tradingName'],
-            "ownerName":  self.data['ownerName'],
-            "document": self.data['document'],
-            "coverageArea": geojson.loads(self.data['coverageArea']),
-            "address": geojson.loads(self.data['address'])
+            "tradingName": data['tradingName'],
+            "ownerName":  data['ownerName'],
+            "document": data['document'],
+            "coverageArea": geojson.loads(ujson.dumps(data['coverageArea'])),
+            "address": geojson.loads(ujson.dumps(data['address']))
         }

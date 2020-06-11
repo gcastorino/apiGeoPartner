@@ -1,4 +1,4 @@
-from validate_docbr import CNPJ
+from pycpfcnpj import cpfcnpj
 
 
 class Util:
@@ -28,7 +28,4 @@ class Util:
         return False
 
     def _is_cnpj(self, data):
-        cnpj = CNPJ()
-        if cnpj.validate(data):
-            return True
-        return False
+        return cpfcnpj.validate(data)
