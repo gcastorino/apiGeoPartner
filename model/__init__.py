@@ -9,6 +9,8 @@ class Mongo:
         pass
 
     def db(self):
+        """Start conection data base MongoDB 
+        """
         try:
             MONGODB_DATABASE = os.getenv('DBAAS_MONGODB_DATABASE')
             DBAAS_MONGODB_ENDPOINT = os.getenv('DBAAS_MONGODB_ENDPOINT')

@@ -35,6 +35,18 @@ services:
       - ./app.py:/api/app.py
     environment:
       PORT: "80"
+      FIELD_ADDRESS: "address"
+      FIELD_COVERAGE_AREA: "coverageArea"
+      FIELD_DOCUMENT: "document"
+      FIELD_OWNER_NAME: "ownerName"
+      FIELD_TRADING_NAME: "tradingName"
+      ERROR_TEXT_GEO: "Can`t extract geo keys"
+      ERROR_TEXT_NOT_FOUND: "Not found"
+      ERROR_TEXT_REQUIRED: "Required field"
+      ERROR_TEXT_STRING: "Type requered string"
+      ERROR_TEXT_DOCUMENT: "Document invalid"
+      ERROR_TEXT_MIN_LENGTH: "Min length"
+      ERROR_TEXT_LENGTH: "Length"
       DBAAS_MONGODB_DATABASE: "project-partner"
       DBAAS_MONGODB_ENDPOINT: "mongodb://db-partner:27017/project-partner"
     #tty: true

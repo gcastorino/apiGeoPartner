@@ -1,7 +1,7 @@
 """A Python Flask REST API Partner (CRUD) Style"""
 
 from flask_cors import CORS, cross_origin
-from controller import partner
+from routes import partner
 import argparse
 import logger_config
 import os

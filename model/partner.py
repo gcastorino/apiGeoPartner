@@ -1,6 +1,7 @@
 from model import Mongo
 from business.hydrator import Hydrator
 from bson.objectid import ObjectId
+import logger_config
 
 
 class Partner:
@@ -13,30 +14,51 @@ class Partner:
         self.hydrator = Hydrator()
 
     def find(self, id):
-        """ search register
+        """ search register by id
         @param id : string
         @return: result query find
         """
         item = self.table.find_one({'_id': ObjectId(id)})
         return item
 
+    def find_document(self, document):
+        """ search register by document
+        @param document : string
+        @return: result query find
+        """
+        item = self.table.find_one({'document': document})
+        return item
+
     def find_geo(self, lnt, lat):
-        """ search register
+        """ search register by coverageArea
         @param id : string
         @return: result query find
         """
-        itens = []
-        for item in self.table.find({'coverageArea': {'$geoIntersects': {'$geometry': {type: "Point", 'coordinates': [lnt, lat]}}}}):
-            itens.append(self.hydrator.encode_partner(item))
-        return itens
+        coordinates = [float(lnt), float(lat)]
+        return self.table.find(
+            {
+                'coverageArea': {
+                    '$geoIntersects': {
+                        '$geometry': {
+                            'type': "Point",
+                            'coordinates': coordinates
+                        }
+                    }
+                }
+            }
+        )
 
     def insert(self, data):
         """ Insert data  
         @param data : object
-        @return: boolean
+        @return: register/false
         """
-        if not self.table.find_one({'document': data['document']}):
+        try:
             register = self.table.insert_one(data)
             if register:
                 return self.table.find_one({'document': data['document']})
-        return False
+            return False
+        except Exception as e:
+            logger = logger_config.get_logger()
+            logger.error(f'create partner ({str(e)})')
+            return False

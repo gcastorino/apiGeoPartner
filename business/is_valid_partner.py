@@ -1,4 +1,5 @@
 from business.util import Util
+import os
 
 
 class ValidPartner:
@@ -13,71 +14,81 @@ class ValidPartner:
         self._address()
 
     #  tradingName: Adega da Cerveja - Pinheiros
-    def _tradingName(self, field='tradingName', min_length=5):
-        """ Validate data tradingName
+    def _tradingName(self, field=os.getenv('FIELD_TRADING_NAME'), min_length=5):
+        """ Validate data tradingName:
             - exist
-            - Requered
-            - Type string
-            - Min length
+            - requered
+            - type string
+            - min length
+            @return: False
         """
         if not self.util._is_found(field, self.data):
-            self.errors.append({field: 'Not found'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_NOT_FOUND')})
             return False
 
         if not self.util._is_requered(self.data[field]):
-            self.errors.append({field: 'Required field'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_REQUIRED')})
             return False
 
         if not self.util._is_string(self.data[field]):
-            self.errors.append({field: 'Type requered str'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_STRING')})
+
         if not self.util._is_min_length(self.data[field], min_length):
-            self.errors.append({field: f'Min length {min_length}'})
+            self.errors.append(
+                {field: f'{os.getenv("ERROR_TEXT_MIN_LENGTH")} {min_length}'})
 
     # ownerName: Zé da Silva
-    def _ownerName(self, field='ownerName', min_length=5):
-        """ Validate data ownerName
+    def _ownerName(self, field=os.getenv('FIELD_OWNER_NAME'), min_length=5):
+        """ Validate data ownerName:
             - exist
-            - Requered
-            - Type string
-            - Min length
+            - requered
+            - type string
+            - min length
+            @return: False
         """
         if not self.util._is_found(field, self.data):
-            self.errors.append({field: 'Not found'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_NOT_FOUND')})
             return False
 
         if not self.util._is_requered(self.data[field]):
-            self.errors.append({field: 'Required field'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_REQUIRED')})
             return False
 
         if not self.util._is_string(self.data[field]):
-            self.errors.append({field: 'Type requered str'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_STRING')})
+
         if not self.util._is_min_length(self.data[field], min_length):
-            self.errors.append({field: f'Min length {min_length}'})
+            self.errors.append(
+                {field: f'{os.getenv("ERROR_TEXT_MIN_LENGTH")} {min_length}'})
 
     # document: 1432132123891/0001
-    def _document(self, field='document', length=18):
-        """ Validate data document
+    def _document(self, field=os.getenv('FIELD_DOCUMENT'), length=18):
+        """ Validate data document:
             - exist
-            - Requered
-            - Type string
-            - Type min length
-            - Length
-            - valid Document CNPJ
+            - requered
+            - type string
+            - type min length
+            - length
+            - valid document CNPJ
+            @return: False
         """
         if not self.util._is_found(field, self.data):
-            self.errors.append({field: 'Not found'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_NOT_FOUND')})
             return False
 
         if not self.util._is_requered(self.data[field]):
-            self.errors.append({field: 'Required field'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_REQUIRED')})
             return False
 
         if not self.util._is_string(self.data[field]):
-            self.errors.append({field: 'Type requered str'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_STRING')})
+
         if not self.util._is_length(self.data[field], length):
-            self.errors.append({field: f'Length {length}'})
+            self.errors.append(
+                {field: f'{os.getenv("ERROR_TEXT_LENGTH")} {length}'})
+
         if not self.util._is_cnpj(self.data[field]):
-            self.errors.append({field: f'Document invalid'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_DOCUMENT')})
 
     # coverageArea: {
     #   "type": "MultiPolygon",
@@ -87,17 +98,18 @@ class ValidPartner:
     #   ]
     # }
 
-    def _coverageArea(self, field='coverageArea'):
-        """ Validate data coverageArea
+    def _coverageArea(self, field=os.getenv('FIELD_COVERAGE_AREA')):
+        """ Validate data coverageArea:
             - exist
-            - Requered
+            - requered
+            @return: False
         """
         if not self.util._is_found(field, self.data):
-            self.errors.append({field: 'Not found'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_NOT_FOUND')})
             return False
 
         if not self.util._is_requered(self.data[field]):
-            self.errors.append({field: 'Required field'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_REQUIRED')})
             return False
 
     #    "address": {
@@ -105,15 +117,16 @@ class ValidPartner:
     #      "coordinates": [-46.57421, -21.785741]
     #    }
 
-    def _address(self, field='address'):
-        """ Validate data address
+    def _address(self, field=os.getenv('FIELD_ADDRESS')):
+        """ Validate data address:
             - exist
-            - Requered
+            - requered
+            @return: False
         """
         if not self.util._is_found(field, self.data):
-            self.errors.append({field: 'Not found'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_NOT_FOUND')})
             return False
 
         if not self.util._is_requered(self.data[field]):
-            self.errors.append({field: 'Required field'})
+            self.errors.append({field: os.getenv('ERROR_TEXT_REQUIRED')})
             return False
