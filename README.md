@@ -1,16 +1,76 @@
 # Api Geo Partner
-API using REST for partner CRUD and partner search by geo location
+Autor: Gabriel Castorino 
 
-start Project
+Linkedin: https://www.linkedin.com/in/gabriel-castorino/
+
+## Object
+Objective to develop that provides API using REST, with the following endpoints:
+
+### 1. Create partner
+All fields are required and must follow the rules set above.
+POST - http://localhost:5000/partner/
+
+### 2. Get partner by id
+Get a specific partner by its id.
+GET - http://localhost:5000/partner/{id}
+
+### 3. Search partner
+Given a specific location (coordinates lng and lat), search the nearest partner considering each partner's coverage area.
+GET - http://localhost:5000/search-partner/{lnt}/{lat}
+
+## Technologies chosen
+The programming language **Python** and the database **Mongo**
+
+## Requered
+```
+Install Python version 3.6
+Service MongoDB 
+```
+
+### To Setup and Start
+```
+pip install -r requirements.txt 
+# Create file .env and set parameters information in ENV 
+set -a; source .env; set +a   
+python app.py
+```
+
+## To Setup by docker
 docker-compose -f "apiGeoPartner/docker-compose.yml" up -d --build
 
-Docker Run 
-docker run -p 27017:27017 --name db-partner -d --network sizijaynetwork mongo
+## create index database
+ db.partner.createIndex("coverageArea","2dsphere");
 
-create index database
-getCollectionIndexInfo("partner","coverageArea_2dsphere");
+## ENV
+```
+PORT="80"
+DBAAS_MONGODB_DATABASE={name_database}
+DBAAS_MONGODB_ENDPOINT="mongodb://{host_database}:27017/{name_database}"
+FIELD_ID="id"
+FIELD_ADDRESS="address"
+FIELD_COVERAGE_AREA="coverageArea"
+FIELD_DOCUMENT="document"
+FIELD_OWNER_NAME="ownerName"
+FIELD_TRADING_NAME="tradingName"
+ERROR_TEXT_GEO="Cant extract geo keys"
+ERROR_TEXT_NOT_FOUND="Not found"
+ERROR_TEXT_REQUIRED="Required field"
+ERROR_TEXT_STRING="Type requered string"
+ERROR_TEXT_NUMBER="Type requered number"
+ERROR_TEXT_OBJECT="Type requered object valid"
+ERROR_TEXT_LIST="Type requered list valid"
+ERROR_TEXT_DOCUMENT="Document invalid"
+ERROR_TEXT_MIN_LENGTH="Min length"
+ERROR_TEXT_LENGTH="Length"
+ERROR_TEXT_INCORRECT="incorrect"
+```
 
-## Tests Units
+### Unit Test with Nose
+```
+nosetests --verbosity=2
+```
+
+## Tests Output
 Command  = nosetests --verbose --nocapture
 ```
 Test util check is found ... ok
