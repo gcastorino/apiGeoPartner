@@ -1,16 +1,14 @@
 version: "3.3"
 services:
-  mongodb:
-    container_name: db-partner
-    restart: unless-stopped
-    command: mongod --auth
+  db-api-partner:
+    container_name: db-api-partner
     image: mongo:3.4-jessie
     ports:
       - "27017:27017"
     volumes:
       - database-volume:/data/db
     networks:
-      - backend
+      - db_net
 
   api-partner:
     container_name: api-partner
@@ -18,11 +16,12 @@ services:
     restart: on-failure
     build:
       context: .
-      dockerfile: Dockerfile
     ports:
       - "5000:80"
+    links:
+      - db-api-partner
     depends_on:
-      - mongodb
+      - db-api-partner
     volumes:
       - ./app.py:/api/app.py
       - ./logger_config.py:/api/logger_config.py
@@ -30,7 +29,6 @@ services:
       - ./business:/api/business
       - ./model:/api/model
       - ./routes:/api/routes
-      - ./static:/api/static
       - ./tests:/api/tests
     environment:
       PORT: "80"
@@ -51,20 +49,18 @@ services:
       ERROR_TEXT_MIN_LENGTH: "Min length"
       ERROR_TEXT_LENGTH: "Length"
       ERROR_TEXT_INCORRECT: "incorrect"
-      DBAAS_MONGODB_DATABASE: "project-partner"
-      DBAAS_MONGODB_ENDPOINT: "mongodb://db-partner:27017/project-partner"
+      DBAAS_MONGODB_DATABASE: "db-api-partner"
+      DBAAS_MONGODB_ENDPOINT: "mongodb://userSystem:teste123@db-api-partner:27017/db-api-partner"
       GUNICORN_MAX_REQUESTS: "10000"
       GUNICORN_WORKERS: "3"
       HOST: "0.0.0.0"
       LOG_LEVEL: "DEBUG"
-    #tty: true
     command: honcho start
     networks:
-      - backend
+      - db_net
+
+networks:
+  db_net:
 
 volumes:
   database-volume:
-
-networks:
-  backend:
-    driver: bridge

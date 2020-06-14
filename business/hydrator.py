@@ -15,8 +15,8 @@ class Hydrator:
             os.getenv('FIELD_TRADING_NAME'): data[os.getenv('FIELD_TRADING_NAME')],
             os.getenv('FIELD_OWNER_NAME'): data[os.getenv('FIELD_OWNER_NAME')],
             os.getenv('FIELD_DOCUMENT'): data[os.getenv('FIELD_DOCUMENT')],
-            os.getenv('FIELD_COVERAGE_AREA'): geojson.dumps(data[os.getenv('FIELD_COVERAGE_AREA')]),
-            os.getenv('FIELD_ADDRESS'): geojson.dumps(data[os.getenv('FIELD_ADDRESS')])
+            os.getenv('FIELD_COVERAGE_AREA'): data[os.getenv('FIELD_COVERAGE_AREA')],
+            os.getenv('FIELD_ADDRESS'): data[os.getenv('FIELD_ADDRESS')]
         }
 
     def decode_partner(self, data):

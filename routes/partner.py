@@ -22,7 +22,8 @@ def partner_geo_search(lnt, lat):
     @param lnt : string
     @param lat : string
     @return: 200: flask/response object.
-    @raise 404: Failed. Data duplicated.
+    @raise 404: Failed. Data not found.
+    @raise 400: Failed. Bad post data.
     @raise 500: Failed. Server Error.
     """
     try:
@@ -36,6 +37,12 @@ def partner_geo_search(lnt, lat):
             logger.error(
                 f'search partner - error - 404 - not found')
             return jsonify({'error': 'not found'}), 404
+
+        # return error not found
+        if business.error:
+            logger.error(
+                f'get partner - error - 400 - {id}')
+            return jsonify(business.error), 400
 
         # return register create
         logger.info(
@@ -55,7 +62,8 @@ def partner_search(id):
     """search partner
     @param id : string
     @return: 200: flask/response object.
-    @raise 404: Failed. Data duplicated.
+    @raise 404: Failed. Data not found.
+    @raise 400: Failed. Bad post data.
     @raise 500: Failed. Server Error.
     """
     try:
@@ -70,6 +78,12 @@ def partner_search(id):
             logger.error(
                 f'get partner - error - 404 - not found {id}')
             return jsonify({'error': 'not found'}), 404
+
+        # return error not found
+        if business.error:
+            logger.error(
+                f'get partner - error - 400 - {id}')
+            return jsonify(business.error), 400
 
         # return register create
         logger.info(f'get partner - success - 200')

@@ -1,4 +1,5 @@
 from business.is_valid_partner import ValidPartner
+from business.util import Check
 from business.hydrator import Hydrator
 from model.partner import Partner as db_partner
 import os
@@ -7,6 +8,7 @@ import os
 class Partner:
     def __init__(self, data=''):
         self.hydrator = Hydrator()
+        self.check = Check()
         self.db_partner = db_partner()
         self.data = data
         self.register = {}
@@ -21,7 +23,15 @@ class Partner:
             @param ltn : string
             @param lat : string
         """
-        response = self.db_partner.find_geo(ltn, lat)
+        if not self.check._is_lnt(ltn):
+            self.error.append({'lnt': os.getenv('ERROR_TEXT_INCORRECT')})
+            return False
+
+        if not self.check._is_lat(lat):
+            self.error.append({'lat': os.getenv('ERROR_TEXT_INCORRECT')})
+            return False
+
+        response = self.db_partner.find_geo(float(ltn), float(lat))
         if response:
             register = []
             for item in response:
@@ -37,7 +47,10 @@ class Partner:
             - convert register 
             - validate error system
         """
-        response = self.db_partner.find(self.data)
+        if not self.check._is_int(self.data):
+            self.error.append({'id': os.getenv('ERROR_TEXT_NUMBER')})
+            return False
+        response = self.db_partner.find(int(self.data))
         if response:
             self.register = self.hydrator.encode_partner(response)
         else:

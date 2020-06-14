@@ -1,4 +1,5 @@
 from pycpfcnpj import cpfcnpj
+import re
 
 
 class Check:
@@ -85,3 +86,19 @@ class Check:
             @return: boolean
         """
         return cpfcnpj.validate(data)
+
+    def _is_lnt(self, data):
+        """ Check is lnt
+            @param data : string
+            @return: boolean
+        """
+        return re.search(
+            r'^(\+|-)?((\d((\.)|\.\d{1,6})?)|(0*?\d\d((\.)|\.\d{1,6})?)|(0*?1[0-7]\d((\.)|\.\d{1,6})?)|(0*?180((\.)|\.0{1,6})?))$', str(data))
+
+    def _is_lat(self, data):
+        """ Check is lat
+            @param data : string
+            @return: boolean
+        """
+        return re.search(
+            r'^(\+|-)?((\d((\.)|\.\d{1,6})?)|(0*?[0-8]\d((\.)|\.\d{1,6})?)|(0*?90((\.)|\.0{1,6})?))$', str(data))

@@ -57,7 +57,8 @@ docker-compose -f "apiGeoPartner/docker-compose.yml" up -d --build
 ### Index Geo database
 
 ```sh
-db.partner.createIndex("coverageArea","2dsphere");
+db.getCollection("partner").createIndex({ "coverageArea": "2dsphere" });
+db.getCollection("partner").createIndex({ "address": "2dsphere" })
 ```
 
 ## ENV
@@ -96,67 +97,74 @@ nosetests --verbosity=2
 ### Result
 
 ```
-Test util check is found ... ok
-Test util check is not found ... ok
-Test util check is requered ... ok
-Test util check is not requered ... ok
-Test util check is string ... ok
-Test util check is not string ... ok
-Test util check is int ... ok
-Test util check is not int ... ok
-Test util check is disc ... ok
-Test util check is not disc ... ok
-Test util check is list ... ok
-Test util check is not list ... ok
-Test util check is min length ... ok
-Test util check is not min length ... ok
-Test util check is length ... ok
-Test util check is not length ... ok
-Test util check is cnpj ... ok
-Test util check is not cnpj ... ok
+Test check is found ... ok
+Test check is not found ... ok
+Test check is requered ... ok
+Test check is not requered ... ok
+Test check is longitude ... ok
+Test check is not longitude ... ok
+Test check is latitude ... ok
+Test check is not latitude ... ok
+Test check is string ... ok
+Test check is not string ... ok
+Test check is int ... ok
+Test check is not int ... ok
+Test check is disc ... ok
+Test check is not disc ... ok
+Test check is list ... ok
+Test check is not list ... ok
+Test check is min length ... ok
+Test check is not min length ... ok
+Test check is length ... ok
+Test check is not length ... ok
+Test check is cnpj ... ok
+Test check is not cnpj ... ok
 Test valid id ... ok
-Test not valid id found ... ok
-Test not valid id requered ... ok
-Test not valid id number ... ok
+Test valid id not found ... ok
+Test valid id not requered ... ok
+Test valid id not number ... ok
 Test valid tradingName ... ok
-Test not valid tradingName found ... ok
-Test not valid tradingName requered ... ok
-Test not valid tradingName string ... ok
-Test not valid tradingName min_length ... ok
+Test valid tradingName not found ... ok
+Test valid tradingName not requered ... ok
+Test valid tradingName not string ... ok
+Test valid tradingName not min length ... ok
 Test valid ownerName ... ok
-Test not valid ownerName found ... ok
-Test not valid ownerName requered ... ok
-Test not valid ownerName string ... ok
-Test not valid ownerName min_length ... ok
+Test valid ownerName not found ... ok
+Test valid ownerName not requered ... ok
+Test valid ownerName not string ... ok
+Test valid ownerName not min length ... ok
 Test valid document ... ok
-Test not valid document found ... ok
-Test not valid document requered ... ok
-Test not valid document string ... ok
-Test not valid document length ... ok
-Test not valid document cnpj ... ok
+Test valid document not found ... ok
+Test valid document not requered ... ok
+Test valid document not string ... ok
+Test valid document not length ... ok
+Test valid document not cnpj ... ok
 Test valid coverageArea ... ok
-Test not valid coverageArea found ... ok
-Test not valid coverageArea dict ... ok
-Test not valid coverageArea requered ... ok
-Test not valid item coverageArea type found ... ok
-Test not valid item coverageArea type requered ... ok
-Test not valid item coverageArea type incorrect ... ok
-Test not valid item coverageArea coordinates found ... ok
-Test not valid item coverageArea coordinates requered ... ok
-Test not valid item coverageArea coordinates list ... ok
+Test valid coverageArea not found ... ok
+Test valid coverageArea not dict ... ok
+Test valid coverageArea not requered ... ok
+Test valid item coverageArea type not found ... ok
+Test valid item coverageArea type not requered ... ok
+Test valid item coverageArea type not incorrect ... ok
+Test valid item coverageArea coordinates not found ... ok
+Test valid item coverageArea coordinates not requered ... ok
+Test valid item coverageArea coordinates not list ... ok
 Test valid address ... ok
-Test not valid address found ... ok
-Test not valid address requered ... ok
-Test not valid address dict ... ok
-Test not valid item address type found ... ok
-Test not valid item address type requered ... ok
-Test not valid item address type incorrect ... ok
-Test not valid item address coordinates found ... ok
-Test not valid item address coordinates requered ... ok
-Test not valid item address coordinates list ... ok
+Test valid address not found ... ok
+Test valid address not requered ... ok
+Test valid address not dict ... ok
+Test valid item address type not found ... ok
+Test valid item address type not requered ... ok
+Test valid item address type not incorrect ... ok
+Test valid item address coordinates not found ... ok
+Test valid item address coordinates not requered ... ok
+Test valid item address coordinates not list ... ok
+Test valid item address coordinates not length ... ok
+Test valid item address coordinates not longitude ... ok
+Test valid item address coordinates not latitude ... ok
 
 ----------------------------------------------------------------------
-Ran 58 tests in 0.222s
+Ran 65 tests in 0.162s
 
 OK
 ```

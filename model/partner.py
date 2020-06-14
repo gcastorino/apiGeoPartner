@@ -34,14 +34,13 @@ class Partner:
         @param id : string
         @return: result query find
         """
-        coordinates = [float(lnt), float(lat)]
         return self.table.find(
             {
                 'coverageArea': {
                     '$geoIntersects': {
                         '$geometry': {
                             'type': "Point",
-                            'coordinates': coordinates
+                            'coordinates': [lnt, lat]
                         }
                     }
                 }

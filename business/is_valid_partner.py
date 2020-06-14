@@ -181,7 +181,7 @@ class ValidPartner:
     #      "coordinates": [-46.57421, -21.785741]
     #    }
 
-    def _address(self, field=os.getenv('FIELD_ADDRESS')):
+    def _address(self, field=os.getenv('FIELD_ADDRESS'), length=2):
         """ Validate data address:
             - exist
             - requered
@@ -192,6 +192,9 @@ class ValidPartner:
             - item - coordinates - exist
             - item - coordinates - requered
             - item - coordinates - list
+            - item - coordinates - length
+            - item - coordinates - longitude
+            - item - coordinates - latitude
             @return: False
         """
         if not self.check._is_found(field, self.data):
@@ -235,3 +238,16 @@ class ValidPartner:
             self.errors.append(
                 {field: 'coordinates ' + os.getenv('ERROR_TEXT_LIST')})
             return False
+
+        if not self.check._is_length(self.data[field]['coordinates'], length):
+            self.errors.append(
+                {field: f'coordinates {os.getenv("ERROR_TEXT_LENGTH")} {length}'})
+            return False
+
+        if not self.check._is_lnt(self.data[field]['coordinates'][0]):
+            self.errors.append(
+                {field: f'longitude {os.getenv("ERROR_TEXT_INCORRECT")}'})
+
+        if not self.check._is_lat(self.data[field]['coordinates'][1]):
+            self.errors.append(
+                {field: f'latitude {os.getenv("ERROR_TEXT_INCORRECT")}'})
