@@ -1,5 +1,6 @@
 import geojson
 import ujson
+import os
 
 
 class Hydrator:
@@ -10,12 +11,12 @@ class Hydrator:
             @return: object
         """
         return {
-            "id": str(data['_id']),
-            "tradingName": data['tradingName'],
-            "ownerName":  data['ownerName'],
-            "document": data['document'],
-            "coverageArea": geojson.dumps(data['coverageArea']),
-            "address": data['address']
+            os.getenv('FIELD_ID'): data[os.getenv('FIELD_ID')],
+            os.getenv('FIELD_TRADING_NAME'): data[os.getenv('FIELD_TRADING_NAME')],
+            os.getenv('FIELD_OWNER_NAME'): data[os.getenv('FIELD_OWNER_NAME')],
+            os.getenv('FIELD_DOCUMENT'): data[os.getenv('FIELD_DOCUMENT')],
+            os.getenv('FIELD_COVERAGE_AREA'): geojson.dumps(data[os.getenv('FIELD_COVERAGE_AREA')]),
+            os.getenv('FIELD_ADDRESS'): geojson.dumps(data[os.getenv('FIELD_ADDRESS')])
         }
 
     def decode_partner(self, data):
@@ -24,9 +25,10 @@ class Hydrator:
             @return: object
         """
         return {
-            "tradingName": data['tradingName'],
-            "ownerName":  data['ownerName'],
-            "document": data['document'],
-            "coverageArea": geojson.loads(ujson.dumps(data['coverageArea'])),
-            "address": geojson.loads(ujson.dumps(data['address']))
+            os.getenv('FIELD_ID'): int(data[os.getenv('FIELD_ID')]),
+            os.getenv('FIELD_TRADING_NAME'): data[os.getenv('FIELD_TRADING_NAME')],
+            os.getenv('FIELD_OWNER_NAME'): data[os.getenv('FIELD_OWNER_NAME')],
+            os.getenv('FIELD_DOCUMENT'): data[os.getenv('FIELD_DOCUMENT')],
+            os.getenv('FIELD_COVERAGE_AREA'): geojson.loads(ujson.dumps(data[os.getenv('FIELD_COVERAGE_AREA')])),
+            os.getenv('FIELD_ADDRESS'): geojson.loads(ujson.dumps(data[os.getenv('FIELD_ADDRESS')]))
         }

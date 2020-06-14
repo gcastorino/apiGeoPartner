@@ -1,7 +1,7 @@
 from pycpfcnpj import cpfcnpj
 
 
-class Util:
+class Check:
     def _is_found(self, field, data):
         """ Check is found
             @param field : string
@@ -21,6 +21,24 @@ class Util:
             return True
         return False
 
+    def _is_list(self, data):
+        """ Check is list
+            @param data : string
+            @return: boolean
+        """
+        if type(data) is list:
+            return True
+        return False
+
+    def _is_dict(self, data):
+        """ Check is dict
+            @param data : string
+            @return: boolean
+        """
+        if type(data) is dict:
+            return True
+        return False
+
     def _is_string(self, data):
         """ Check is string
             @param data : string
@@ -29,6 +47,17 @@ class Util:
         if type(data) is str:
             return True
         return False
+
+    def _is_int(self, data):
+        """ Check is number
+            @param data : string
+            @return: boolean
+        """
+        try:
+            int(data)
+            return True
+        except:
+            return False
 
     def _is_min_length(self, data, min_length):
         """ Check is min length

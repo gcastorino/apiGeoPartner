@@ -1,1 +1,1 @@
-web: gunicorn app:APP
+web: gunicorn -k gevent --log-level $LOG_LEVEL --access-logfile - --max-requests $GUNICORN_MAX_REQUESTS -w $GUNICORN_WORKERS -b $HOST:$PORT app:APP

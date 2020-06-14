@@ -1,25 +1,16 @@
 version: "3.3"
 services:
-  db-partner:
+  mongodb:
     container_name: db-partner
+    restart: unless-stopped
+    command: mongod --auth
     image: mongo:3.4-jessie
     ports:
       - "27017:27017"
     volumes:
       - database-volume:/data/db
-
-  inspect-partner:
-    container_name: inspect-partner
-    image: mongoclient/mongoclient
-    restart: on-failure
-    depends_on:
-      - db-partner
-    environment:
-      MONGO_URL: "mongodb://db-partner:27017/project-partner"
-    volumes:
-      - nosqlclient-volume:/data/db
-    ports:
-      - "9000:3000"
+    networks:
+      - backend
 
   api-partner:
     container_name: api-partner
@@ -27,31 +18,53 @@ services:
     restart: on-failure
     build:
       context: .
+      dockerfile: Dockerfile
     ports:
       - "5000:80"
     depends_on:
-      - db-partner
+      - mongodb
     volumes:
       - ./app.py:/api/app.py
+      - ./logger_config.py:/api/logger_config.py
+      - ./controller:/api/controller
+      - ./business:/api/business
+      - ./model:/api/model
+      - ./routes:/api/routes
+      - ./static:/api/static
+      - ./tests:/api/tests
     environment:
       PORT: "80"
+      FIELD_ID: "id"
       FIELD_ADDRESS: "address"
       FIELD_COVERAGE_AREA: "coverageArea"
       FIELD_DOCUMENT: "document"
       FIELD_OWNER_NAME: "ownerName"
       FIELD_TRADING_NAME: "tradingName"
-      ERROR_TEXT_GEO: "Can`t extract geo keys"
+      ERROR_TEXT_GEO: "Cant extract geo keys"
       ERROR_TEXT_NOT_FOUND: "Not found"
       ERROR_TEXT_REQUIRED: "Required field"
       ERROR_TEXT_STRING: "Type requered string"
+      ERROR_TEXT_NUMBER: "Type requered number"
+      ERROR_TEXT_OBJECT: "Type requered object valid"
+      ERROR_TEXT_LIST: "Type requered list valid"
       ERROR_TEXT_DOCUMENT: "Document invalid"
       ERROR_TEXT_MIN_LENGTH: "Min length"
       ERROR_TEXT_LENGTH: "Length"
+      ERROR_TEXT_INCORRECT: "incorrect"
       DBAAS_MONGODB_DATABASE: "project-partner"
       DBAAS_MONGODB_ENDPOINT: "mongodb://db-partner:27017/project-partner"
+      GUNICORN_MAX_REQUESTS: "10000"
+      GUNICORN_WORKERS: "3"
+      HOST: "0.0.0.0"
+      LOG_LEVEL: "DEBUG"
     #tty: true
     command: honcho start
+    networks:
+      - backend
 
 volumes:
   database-volume:
-  nosqlclient-volume:
+
+networks:
+  backend:
+    driver: bridge
