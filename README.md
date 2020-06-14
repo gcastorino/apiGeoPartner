@@ -24,11 +24,13 @@ Objective to develop that provides API using REST, with the following endpoints:
 
       - GET - http://localhost:5000/search-partner/{lnt}/{lat}
 
-## Technologies chosen
+### Technologies chosen
 
 The programming language **Python** and the database **Mongo**
 
-## Requered
+## Install and deploy
+
+### Requered
 
 ```
 Install Python version 3.6
@@ -44,13 +46,15 @@ set -a; source .env; set +a
 python app.py
 ```
 
-## To Setup by docker
+### Or Docker
+
+The project is ready to install and deploy in a Docker container.
 
 ```sh
 docker-compose -f "apiGeoPartner/docker-compose.yml" up -d --build
 ```
 
-## create index database
+### Index Geo database
 
 ```sh
 db.partner.createIndex("coverageArea","2dsphere");
@@ -81,21 +85,16 @@ ERROR_TEXT_LENGTH="Length"
 ERROR_TEXT_INCORRECT="incorrect"
 ```
 
+## Tests Output
+
 ### Unit Test with Nose
 
-Command:
 ```sh
 nosetests --verbosity=2
 ```
 
-## Tests Output
+### Result
 
-Command:
-```sh
-nosetests --verbose --nocapture
-```
-
-Result:
 ```
 Test util check is found ... ok
 Test util check is not found ... ok
