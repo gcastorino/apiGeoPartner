@@ -18,7 +18,7 @@ class Partner:
         @param id : string
         @return: result query find
         """
-        item = self.table.find_one({'_id': ObjectId(id)})
+        item = self.table.find_one({'id': id})
         return item
 
     def find_document(self, document):
