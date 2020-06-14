@@ -12,7 +12,7 @@ getCollectionIndexInfo("partner","coverageArea_2dsphere");
 
 ## Tests Units
 Command  = nosetests --verbose --nocapture
-'''
+```
 Test util check is found ... ok
 Test util check is not found ... ok
 Test util check is requered ... ok
@@ -76,4 +76,4 @@ Test not valid item address coordinates list ... ok
 Ran 58 tests in 0.222s
 
 OK
-'''
+```
