@@ -6,28 +6,37 @@ Linkedin: https://www.linkedin.com/in/gabriel-castorino/
 ## Object
 Objective to develop that provides API using REST, with the following endpoints:
 
-### 1. Create partner
-All fields are required and must follow the rules set above.
-POST - http://localhost:5000/partner/
+  - Create partner
 
-### 2. Get partner by id
-Get a specific partner by its id.
-GET - http://localhost:5000/partner/{id}
+      - All fields are required and must follow the rules set above.
 
-### 3. Search partner
-Given a specific location (coordinates lng and lat), search the nearest partner considering each partner's coverage area.
-GET - http://localhost:5000/search-partner/{lnt}/{lat}
+      - POST - http://localhost:5000/partner/
+
+  - Get partner by id
+
+      - Get a specific partner by its `id`.
+
+      - GET - http://localhost:5000/partner/{id}
+
+  - Search partner
+
+      - Given a specific location (coordinates `lng` and `lat`), search the nearest partner considering each partner's coverage area.
+
+      - GET - http://localhost:5000/search-partner/{lnt}/{lat}
 
 ## Technologies chosen
+
 The programming language **Python** and the database **Mongo**
 
 ## Requered
+
 ```
 Install Python version 3.6
 Service MongoDB 
 ```
 
 ### To Setup and Start
+
 ```
 pip install -r requirements.txt 
 # Create file .env and set parameters information in ENV 
@@ -36,13 +45,20 @@ python app.py
 ```
 
 ## To Setup by docker
+
+```sh
 docker-compose -f "apiGeoPartner/docker-compose.yml" up -d --build
+```
 
 ## create index database
- db.partner.createIndex("coverageArea","2dsphere");
+
+```sh
+db.partner.createIndex("coverageArea","2dsphere");
+```
 
 ## ENV
-```
+
+```sh
 PORT="80"
 DBAAS_MONGODB_DATABASE={name_database}
 DBAAS_MONGODB_ENDPOINT="mongodb://{host_database}:27017/{name_database}"
@@ -66,12 +82,20 @@ ERROR_TEXT_INCORRECT="incorrect"
 ```
 
 ### Unit Test with Nose
-```
+
+Command:
+```sh
 nosetests --verbosity=2
 ```
 
 ## Tests Output
-Command  = nosetests --verbose --nocapture
+
+Command:
+```sh
+nosetests --verbose --nocapture
+```
+
+Result:
 ```
 Test util check is found ... ok
 Test util check is not found ... ok
